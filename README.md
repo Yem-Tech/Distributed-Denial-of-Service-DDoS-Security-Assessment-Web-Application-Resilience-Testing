@@ -23,7 +23,7 @@ The assessment focuses on:
 
 > ⚠️ **DISCLAIMER**
 >
-> **This assessment was conducted strictly in an authorized testing environment for educational and defensive cybersecurity purposes only. Unauthorized DDoS activity against systems you do not own or have explicit permission to test is illegal and unethical.**
+> This assessment was conducted strictly in an authorized testing environment for educational and defensive cybersecurity purposes only. Unauthorized DDoS activity against systems you do not own or have explicit permission to test is illegal and unethical.
 
 ---
 
