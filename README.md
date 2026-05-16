@@ -134,7 +134,7 @@ The primary objective of this assessment is to determine:
 git clone https://github.com/XCHADXFAQ77X/XERXES
 ```
 
-### 📷 [Attach Screenshot:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/01-git_clone_xerxes_DDOS%20-%20Copy.png)
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/01-git_clone_xerxes_DDOS%20-%20Copy.png)
 
 `01-git_clone_xerxes_DDOS - Copy(1).png`
 
@@ -146,7 +146,7 @@ git clone https://github.com/XCHADXFAQ77X/XERXES
 ls
 ```
 
-### 📷 Attach Screenshot:
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/02-GIT_CLONE_XERXES_DDOS-ls%20-%20Copy.png)
 
 `02-GIT_CLONE_XERXES_DDOS-ls - Copy(1).png`
 
@@ -158,7 +158,7 @@ ls
 cd XERXES
 ```
 
-### 📷 Attach Screenshot:
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/03-cd_XERXES%20-%20Copy.png)
 
 `03-cd_XERXES - Copy(1).png`
 
@@ -184,7 +184,7 @@ Resolved IP:
 66.29.153.49
 ```
 
-### 📷 Attach Screenshot:
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/04-halisans_IP_address.png)
 
 `04-halisans_IP_address(2).png`
 
@@ -211,7 +211,7 @@ Resolved IP:
 | 80   | HTTP    |
 | 443  | HTTPS   |
 
-### 📷 Attach Screenshot:
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/05-DOS_activated.png)
 
 `05-DOS_activated(2).png`
 
@@ -226,7 +226,7 @@ The generated traffic continuously floods the target application to test:
 * Application availability
 * Traffic handling capability
 
-### 📷 Attach Screenshot:
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/05-DoS_activated_2.png)
 
 `05-DoS_activated_2(2).png`
 
@@ -254,7 +254,7 @@ The target was identified as using:
 
 * LiteSpeed Technologies WAF
 
-### 📷 Attach Screenshot:
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/06-Dos_wafw00f.png)
 
 `06-Dos_wafw00f(2).png`
 
@@ -266,11 +266,11 @@ The target was identified as using:
 wafw00f -l
 ```
 
-### 📷 Attach Screenshot:
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/07-wafw00f_recommendation_.png)
 
 `07-wafw00f_recommendation_(2).png`
 
-### 📷 Attach Screenshot:
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/08-WAF_DDoS_designedfor.png)
 
 `08-WAF_DDoS_designedfor(2).png`
 
@@ -314,7 +314,7 @@ DDoS testing can also target endpoint services such as:
 
 # Opening Inbound Firewall Rules
 
-### 📷 Attach Screenshot:
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/09-inbound_rule.png)
 
 `09-inbound_rule(1).png`
 
@@ -322,7 +322,7 @@ DDoS testing can also target endpoint services such as:
 
 # Creating a New Firewall Rule
 
-### 📷 Attach Screenshot:
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/10-inbount_new_rules.png)
 
 `10-inbount_new_rules(2).png`
 
@@ -335,7 +335,7 @@ Blocked ports:
 * 22 (SSH)
 * 3389 (RDP)
 
-### 📷 Attach Screenshot:
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/11-ports_block_perm.png)
 
 `11-ports_block_perm(2).png`
 
@@ -343,7 +343,7 @@ Blocked ports:
 
 # Naming the Security Rule
 
-### 📷 Attach Screenshot:
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/12-ssh_rdp_port_.png)
 
 `12-ssh_rdp_port_(2).png`
 
@@ -351,7 +351,7 @@ Blocked ports:
 
 # Confirmation of Blocked Ports
 
-### 📷 Attach Screenshot:
+### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/13-ssh_rdp_blocked_confirmed.png)
 
 `13-ssh_rdp_blocked_confirmed(2).png`
 
