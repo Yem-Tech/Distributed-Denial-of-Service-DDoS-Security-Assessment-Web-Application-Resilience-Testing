@@ -134,7 +134,7 @@ The primary objective of this assessment is to determine:
 git clone https://github.com/XCHADXFAQ77X/XERXES
 ```
 
-### 📷 Attach Screenshot:(https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/01-git_clone_xerxes_DDOS%20-%20Copy.png)
+### 📷 Attach Screenshot:[clone xerxes](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/01-git_clone_xerxes_DDOS%20-%20Copy.png)
 
 `01-git_clone_xerxes_DDOS - Copy(1).png`
 
