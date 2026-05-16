@@ -496,5 +496,5 @@ Professional DDoS security assessment focused on availability testing, WAF analy
 
 # 👨‍💻 AUTHOR
 
-**Gbemisola**
+**Olayemi Owoeye**
 Cybersecurity Analyst | Offensive Security | Security Operations | Threat Detection
