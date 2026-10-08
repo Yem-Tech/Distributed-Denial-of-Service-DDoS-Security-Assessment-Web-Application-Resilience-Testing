@@ -1,500 +1,160 @@
-# Distributed Denial of Service (DDoS) Security Assessment & Web Application Resilience Testing
+# DoS Traffic Observation, WAF Fingerprinting and Windows Firewall Hardening
 
-![Cybersecurity](https://img.shields.io/badge/Cybersecurity-DDoS%20Assessment-red?style=for-the-badge\&logo=securityscorecard)
-![Platform](https://img.shields.io/badge/Platform-Kali%20Linux-blue?style=for-the-badge\&logo=kalilinux)
-![Focus](https://img.shields.io/badge/Focus-Web%20Application%20Security-success?style=for-the-badge)
-![MITRE ATT\&CK](https://img.shields.io/badge/MITRE-Impact%20Technique-critical?style=for-the-badge)
+An educational availability-security project using Kali Linux, Xerxes, wafw00f and Windows Defender Firewall with Advanced Security.
 
----
+## Project Overview
 
-# 📌 Project Overview
+This project documents three activities: observation of a single-source traffic-generation exercise, identification of a web application firewall signature, and configuration of Windows inbound firewall rules for administrative ports.
 
-This project demonstrates an authorized **Distributed Denial of Service (DDoS) Security Assessment** performed to evaluate the resilience of a web application and the effectiveness of a deployed **Web Application Firewall (WAF)** against traffic flooding attacks.
+The screenshots demonstrate tool execution and firewall configuration. They do not establish a service outage, successful DDoS mitigation, or measured application resilience.
 
-The assessment focuses on:
+**Assessment context:** The exercise is described as authorized educational testing. Testing and publication must remain within the permission granted by the system owner. The Windows firewall demonstration is a separate local hardening activity; it is not evidence of a change to the remote web server.
 
-* Understanding DoS and DDoS attacks
-* Evaluating Availability within the CIA Triad
-* Testing WAF rate-limiting controls
-* Monitoring web application resilience under stress
-* Identifying deployed WAF technologies
-* Reviewing MITRE ATT&CK impact techniques
-* Implementing mitigation and remediation strategies
+## Objectives
 
-> ⚠️ **DISCLAIMER**
->
-> This assessment was conducted strictly in an authorized testing environment for educational and defensive cybersecurity purposes only. Unauthorized DDoS activity against systems you do not own or have explicit permission to test is illegal and unethical.
+- Understand availability risks associated with denial of service.
+- Distinguish tool output from verified service impact.
+- Identify a WAF signature using wafw00f.
+- Configure inbound restrictions for selected Windows TCP ports.
+- Document findings, evidence limitations and defensive recommendations.
 
----
+## Tools and Environment
 
-# 🛡️ CIA TRIAD REFERENCE
+| Component | Role |
+|---|---|
+| Kali Linux | Workstation for the terminal-based exercise |
+| Xerxes | Traffic-generation tool used in the recorded exercise |
+| ping | Hostname resolution and basic ICMP reachability observation |
+| wafw00f v2.3.1 | WAF fingerprinting and supported-product listing |
+| Windows Defender Firewall with Advanced Security | Local inbound rule configuration |
 
-Cybersecurity is built around three key principles:
+## DoS and DDoS: Scope of This Exercise
 
-| Principle       | Meaning                                                     |
-| --------------- | ----------------------------------------------------------- |
-| Confidentiality | Protecting sensitive information from unauthorized access   |
-| Integrity       | Ensuring data remains accurate and unaltered                |
-| Availability    | Ensuring systems and services remain accessible when needed |
+Denial of service targets the availability of a system or service. Distributed denial of service involves coordinated activity from multiple sources.
 
-This project specifically focuses on:
+The supplied evidence shows execution from one Kali Linux workstation. This report therefore describes a **single-source DoS exercise**, rather than a demonstrated distributed attack. The number of tool workers or connections does not establish multiple independent sources.
 
-# 🔴 Availability
+## Assessment Workflow and Evidence
 
-Availability ensures that users can access systems, applications, and services whenever required.
+### 1. Tool Preparation
 
-### Example Scenario
+The Xerxes repository was downloaded and its directory inspected. The listing contains `README.md`, `xerxes` and `xerxes.c`.
 
-A customer attempts to withdraw money from a bank, but the banking application becomes unreachable due to network congestion or malicious traffic flooding.
+The screenshots establish repository retrieval and file inspection. They do not show a compilation command being executed.
 
-Although the data still exists, the service becomes inaccessible.
+![Xerxes repository and file inspection](Screenshots/03-tool-files.png)
 
-This is an **Availability Compromise**, commonly associated with **DoS/DDoS attacks**.
+### 2. Hostname Resolution and Reachability
 
----
+The terminal shows a hostname resolving to an IPv4 address, followed by two successful ICMP replies and zero packet loss for that short sample.
 
-# 📚 What is Denial of Service (DoS)?
+This establishes basic reachability at that moment. It does not measure HTTPS availability, baseline throughput or resilience under load.
 
-A **Denial of Service (DoS)** attack occurs when a system or web application is flooded with traffic beyond its capacity, causing legitimate users to lose access to the service.
+![Hostname resolution and ICMP replies](Screenshots/04-host-reachability.png)
 
-### Common Characteristics
+### 3. Traffic-Generation Output
 
-* Single attacking source
-* Traffic flooding
-* Resource exhaustion
-* Service degradation
-* Application crashes
-* HTTP 404/503 errors
+Xerxes was executed against TCP port 443. The terminal reports connection messages and repeated `Voly Sent` output.
 
----
+These messages show what the client tool reported. Their changing numeric values are not bandwidth measurements, response-time statistics or proof of firewall throttling. No server logs, packet captures or independent service-health measurements accompany the output.
 
-# 🌐 What is Distributed Denial of Service (DDoS)?
+![Traffic-generation connection messages](Screenshots/05-traffic-start.png)
 
-A **Distributed Denial of Service (DDoS)** attack is similar to DoS, but traffic originates from multiple devices or IP addresses simultaneously.
+![Continuing traffic-generation output](Screenshots/06-traffic-output.png)
 
-This makes the attack:
+### 4. WAF Fingerprinting
 
-* More powerful
-* Faster
-* Harder to mitigate
-* More difficult to trace
+wafw00f reported the target as being behind **LiteSpeed (LiteSpeed Technologies)**. Its output reports two requests for this detection.
 
----
+This is a tool-reported fingerprint. It does not verify the deployed configuration, rate-limiting policy or effectiveness against denial of service.
 
-# 🎯 MITRE ATT&CK REFERENCE
+![LiteSpeed fingerprint reported by wafw00f](Screenshots/07-waf-fingerprint.png)
 
-This assessment aligns with the **MITRE ATT&CK Impact Tactic**.
+### 5. Supported WAF Product Review
 
-| Tactic | Technique                  |
-| ------ | -------------------------- |
-| Impact | Endpoint Denial of Service |
-| Impact | Network Denial of Service  |
+The supported-product list was reviewed, including entries labelled DDoS-GUARD and DOSarrest.
 
-### Objective
+The `wafw00f -l` option lists products the tool can detect. This list is not a recommendation, a performance comparison or evidence that any listed product protects the assessed target.
 
-To disrupt or degrade the availability of targeted resources and services.
+![Selected entries in the supported WAF list](Screenshots/08-supported-waf-list.png)
 
----
+### 6. Windows Inbound Firewall Configuration
 
-# 🧪 SECURITY ASSESSMENT OBJECTIVES
+The Windows firewall wizard shows a **Port** rule with **TCP** selected and specific local ports **22,3389** entered. These are commonly associated with SSH and RDP respectively.
 
-The primary objective of this assessment is to determine:
+![Selecting a port-based inbound rule](Screenshots/09-rule-type.png)
 
-* The strength of the deployed Web Application Firewall
-* Whether rate-limiting mechanisms exist
-* The resilience of the web application during traffic flooding
-* How the infrastructure responds under attack conditions
-* Whether endpoint services are properly protected
+![Selecting TCP ports 22 and 3389](Screenshots/10-tcp-ports.png)
 
----
+The rule was named **Block SSH and RDP ports**. The final list shows two enabled entries with this name, block icons and the profile value **All**.
 
-# 🖥️ ASSESSMENT ENVIRONMENT
+![Naming the firewall rule](Screenshots/11-rule-name.png)
 
-| Component           | Technology                    |
-| ------------------- | ----------------------------- |
-| Operating System    | Kali Linux                    |
-| Attack Tool         | Xerxes                        |
-| WAF Detection Tool  | wafw00f                       |
-| Testing Methodology | Authorized Offensive Security |
-| Focus Area          | DDoS Resilience Testing       |
+![Enabled block-rule entries in Windows Firewall](Screenshots/12-enabled-block-rules.png)
 
----
+The final screenshot demonstrates rule presence, not a successful connection-blocking test. The two same-name entries should be inspected to determine whether they are duplicates or have different settings. The TCP-port screenshot does not document a UDP rule.
 
-# ⚙️ TOOL USED — XERXES
+## Findings and Evidence Boundaries
 
-**Xerxes** is a lightweight DoS stress testing tool commonly used in controlled environments to evaluate how systems react to traffic flooding.
+| Assessment area | Supported conclusion | Unverified outcome |
+|---|---|---|
+| Traffic generation | Client reported connections and sent activity on TCP 443 | Received traffic volume and service impact |
+| Attack distribution | One workstation shown | Multiple independent traffic sources |
+| WAF identification | wafw00f reported LiteSpeed | Exact configuration and mitigation effectiveness |
+| Rate limiting | No direct measurement provided | Throttling or rate-limit enforcement |
+| Application availability | No independent under-load check supplied | Maintained availability or outage |
+| Windows hardening | Enabled block-rule entries shown | Effective blocking confirmed by connection tests |
 
----
+No formal vulnerability severity or resilience score is assigned because the evidence does not establish exploitable impact or measured service performance.
 
-# 📸 PROJECT WALKTHROUGH
+## Defensive Recommendations
 
-# 1️⃣ Cloning the Xerxes Repository
+- Use provider-level DDoS protection and upstream filtering appropriate to the environment.
+- Configure application-aware connection limits, timeouts and rate limiting where suitable.
+- Monitor service health, connection counts, error rates and resource utilization.
+- Restrict administrative access to approved management paths; disable unnecessary services.
+- Review firewall rule direction, protocol, ports, profiles, action and scope.
+- Inspect the two same-name rules and remove redundant entries only after confirming their settings.
+- Retain logs and independent measurements to support future assessment conclusions.
 
-```bash
-git clone https://github.com/XCHADXFAQ77X/XERXES
-```
+A WAF and a local host firewall serve different purposes. Blocking administrative ports reduces exposure to those services but does not establish protection from upstream bandwidth exhaustion. A TCP-only rule also does not cover UDP traffic.
 
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/01-git_clone_xerxes_DDOS%20-%20Copy.png)
+## Further Validation Needed
 
-`01-git_clone_xerxes_DDOS - Copy(1).png`
+To establish resilience or control effectiveness in a separately approved assessment, collect:
 
----
+| Evidence | What it would clarify |
+|---|---|
+| Baseline and during-test application health checks | Availability and response-time changes |
+| Server, WAF and network logs | Received activity and control decisions |
+| Recorded duration and traffic measurements | Scope and magnitude of the exercise |
+| Firewall rule properties | Actual action, protocol, scope and profiles |
+| Before-and-after connection tests | Whether the intended administrative access restriction works |
 
-# 2️⃣ Verifying Downloaded Files
+These validation activities are proposed next steps, not completed project results.
 
-```bash
-ls
-```
+## Skills Demonstrated
 
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/02-GIT_CLONE_XERXES_DDOS-ls%20-%20Copy.png)
+- Linux terminal use and tool preparation
+- Basic hostname resolution and reachability interpretation
+- WAF fingerprint interpretation
+- Windows inbound firewall configuration
+- Availability-risk analysis
+- Evidence-based assessment reporting
 
-`02-GIT_CLONE_XERXES_DDOS-ls - Copy(1).png`
+## Screenshot Handling
 
----
+The screenshot filenames below are publication filenames. Rename the selected images to match before uploading them into `Screenshots`.
 
-# 3️⃣ Navigating into the Directory
+Before public upload, review target hostnames, IP addresses, personal directory names and unrelated browser tabs. The supplied images have not been redacted as part of this README revision. Retain original captures privately.
 
-```bash
-cd XERXES
-```
+## References
 
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/03-cd_XERXES%20-%20Copy.png)
+- [wafw00f usage documentation](https://github.com/EnableSecurity/wafw00f/wiki/Usage)
+- [Microsoft Windows Firewall rules](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules)
 
-`03-cd_XERXES - Copy(1).png`
+## Author
 
----
-
-# 🔨 Compiling Xerxes
-
-```bash
-gcc -o xerxes xerxes.c
-```
-
----
-
-# 🎯 Resolving the Target IP Address
-
-```bash
-ping halisans.com -c2
-```
-
-Resolved IP:
-
-```text
-66.29.153.49
-```
-
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/04-halisans_IP_address.png)
-
-`04-halisans_IP_address(2).png`
-
----
-
-# 🚀 Launching the DoS Simulation
-
-### Command Syntax
-
-```bash
-./xerxes IP PORT
-```
-
-### Example
-
-```bash
-./xerxes 66.29.153.49 443
-```
-
-### Targeted Ports
-
-| Port | Service |
-| ---- | ------- |
-| 80   | HTTP    |
-| 443  | HTTPS   |
-
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/05-DOS_activated.png)
-
-`05-DOS_activated(2).png`
-
----
-
-# 📈 Traffic Flood Observation
-
-The generated traffic continuously floods the target application to test:
-
-* Rate limiting
-* WAF resilience
-* Application availability
-* Traffic handling capability
-
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/05-DoS_activated_2.png)
-
-`05-DoS_activated_2(2).png`
-
----
-
-# 🔥 WEB APPLICATION FIREWALL (WAF) DETECTION
-
-# Installing wafw00f
-
-```bash
-sudo apt install wafw00f
-```
-
----
-
-# Detecting the Firewall
-
-```bash
-wafw00f halisans.com
-```
-
-### Result
-
-The target was identified as using:
-
-* LiteSpeed Technologies WAF
-
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/06-Dos_wafw00f.png)
-
-`06-Dos_wafw00f(2).png`
-
----
-
-# 🧠 Recommended WAF Technologies
-
-```bash
-wafw00f -l
-```
-
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/07-wafw00f_recommendation_.png)
-
-`07-wafw00f_recommendation_(2).png`
-
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/08-WAF_DDoS_designedfor.png)
-
-`08-WAF_DDoS_designedfor(2).png`
-
----
-
-# 🛡️ OBSERVED WAF BEHAVIOR
-
-During testing, the WAF demonstrated effective:
-
-* Rate limiting
-* Request throttling
-* Traffic normalization
-* Attack mitigation
-
-### Key Observation
-
-Traffic spikes increased aggressively but were repeatedly reduced by the firewall mechanisms.
-
-This demonstrated:
-
-* Active anti-DoS protection
-* Automated request control
-* Effective resilience engineering
-
-Additionally, the web application remained accessible during testing, indicating strong service availability and defensive posture.
-
----
-
-# 💻 ENDPOINT DENIAL OF SERVICE TESTING
-
-DDoS testing can also target endpoint services such as:
-
-| Service | Port |
-| ------- | ---- |
-| SSH     | 22   |
-| RDP     | 3389 |
-
----
-
-# 🔐 WINDOWS FIREWALL MITIGATION DEMONSTRATION
-
-# Opening Inbound Firewall Rules
-
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/09-inbound_rule.png)
-
-`09-inbound_rule(1).png`
-
----
-
-# Creating a New Firewall Rule
-
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/10-inbount_new_rules.png)
-
-`10-inbount_new_rules(2).png`
-
----
-
-# Selecting TCP Ports
-
-Blocked ports:
-
-* 22 (SSH)
-* 3389 (RDP)
-
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/11-ports_block_perm.png)
-
-`11-ports_block_perm(2).png`
-
----
-
-# Naming the Security Rule
-
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/12-ssh_rdp_port_.png)
-
-`12-ssh_rdp_port_(2).png`
-
----
-
-# Confirmation of Blocked Ports
-
-### 📷 [View image:](https://github.com/Yem-Tech/Distributed-Denial-of-Service-DDoS-Security-Assessment-Web-Application-Resilience-Testing/blob/main/Screenshots/13-ssh_rdp_blocked_confirmed.png)
-
-`13-ssh_rdp_blocked_confirmed(2).png`
-
----
-
-# 📊 KEY FINDINGS
-
-| Assessment Area              | Observation                  |
-| ---------------------------- | ---------------------------- |
-| Web Application Availability | Maintained                   |
-| WAF Presence                 | Confirmed                    |
-| WAF Vendor                   | LiteSpeed Technologies       |
-| Rate Limiting                | Effective                    |
-| Traffic Mitigation           | Successful                   |
-| Endpoint Exposure            | Mitigated via firewall rules |
-| Application Resilience       | Strong                       |
-
----
-
-# 🛠️ MITIGATION STRATEGIES
-
-# 1️⃣ Ingress Traffic Filtering
-
-Restrict inbound traffic to trusted IP ranges.
-
-### Example
-
-Allow SSH and RDP access only from authorized administrative networks.
-
----
-
-# 2️⃣ Egress Traffic Filtering
-
-Block unauthorized outbound communications.
-
-### Example
-
-Prevent connections to malicious command-and-control servers.
-
----
-
-# 3️⃣ Protocol-Based Filtering
-
-Restrict vulnerable or unnecessary protocols.
-
-### Example
-
-Disable SMBv1 to reduce exploitation risks.
-
----
-
-# 4️⃣ Application Layer Filtering
-
-Deploy Web Application Firewalls to inspect malicious HTTP/S requests.
-
-### Example
-
-* Block SQL injection attempts
-* Mitigate abnormal traffic spikes
-
----
-
-# 5️⃣ Network Segmentation
-
-Separate critical systems into isolated VLANs.
-
-### Benefits
-
-* Reduced attack surface
-* Improved containment
-* Controlled lateral movement
-
----
-
-# 🔐 SECURITY RECOMMENDATIONS
-
-* Deploy enterprise-grade WAF solutions
-* Enable adaptive rate limiting
-* Implement CDN-based DDoS protection
-* Use load balancing and traffic scrubbing
-* Restrict administrative ports
-* Monitor traffic anomalies continuously
-* Enable SIEM logging and alerting
-* Conduct periodic resilience testing
-
----
-
-# 🧭 CONCLUSION
-
-This project demonstrates how authorized DDoS simulations can be leveraged defensively to evaluate:
-
-* Web application resilience
-* Firewall effectiveness
-* Rate-limiting capabilities
-* Infrastructure availability under stress
-
-The assessment confirmed that the tested environment successfully mitigated excessive traffic through active WAF protections and maintained service availability during simulated attack conditions.
-
----
-
-# 📖 SKILLS DEMONSTRATED
-
-* Offensive Security Testing
-* DDoS Simulation
-* Web Application Security
-* WAF Analysis
-* MITRE ATT&CK Mapping
-* Linux Administration
-* Firewall Configuration
-* Security Hardening
-* Network Security Monitoring
-* Threat Mitigation
-
----
-
-# 🏷️ TAGS
-
-```text
-#CyberSecurity
-#DDoS
-#DoS
-#WAF
-#KaliLinux
-#Xerxes
-#MITREATTACK
-#OffensiveSecurity
-#BlueTeam
-#WebSecurity
-#SOC
-#ThreatDetection
-```
-
----
-
-# 📌 GITHUB REPOSITORY DESCRIPTION
-
-```text
-Professional DDoS security assessment focused on availability testing, WAF analysis, endpoint protection, and mitigation strategies aligned with MITRE ATT&CK.
-```
-
----
-
-# 👨‍💻 AUTHOR
-
-**Olayemi Owoeye**
-Cybersecurity Analyst | Offensive Security | Security Operations | Threat Detection
+**Olayemi Owoeye**  
+Cybersecurity Portfolio  
+[GitHub: Yem-Tech](https://github.com/Yem-Tech)
